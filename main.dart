@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
-import 'bottom.dart';
+import 'package:flutter_application_4/home.dart';
+import './providers/meal_provider.dart';
+import './providers/recipe_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import 'bottom_bar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+ 
+Widget build(BuildContext context) {
+  return MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+          create: (_) => Meals(),
+        ),
+        ChangeNotifierProvider(create: (_) => Recipes())
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: GoogleFonts.montserratTextTheme(),
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const Bottombar(),
       ),
-      // ignore: prefer_const_constructors
-      home: MyNavigationBar(),
     );
   }
 }
